@@ -1,0 +1,119 @@
+package main;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Sales {
+	
+	
+	static int fillArray(double array[]) {
+		double userInput;
+		Scanner input = new Scanner(System.in);
+		
+		int i = 0;
+		while(input.hasNext()) {
+			userInput = input.nextDouble();
+			array[i]= userInput;
+			i += 1;
+		}
+		
+		if(i > 9) {
+			System.out.println("Cannot hold more than 10 locations! Ignoring the extra data.");
+			i = 9;
+		}
+		
+		input.close();
+		return i;
+		
+	}
+	
+	
+	static void displayArray(double array[], int numUsed) {
+		for(int i = 0; i <= numUsed; i++) {
+			System.out.println("Array[" + i + "]: $" + array[i]);
+		}
+	}
+	
+	
+	static double sumArray(double array[], int numUsed) {
+		double sum = 0;
+		for(int i = 0; i <= numUsed; i++) {
+			sum += array[i];
+		}
+		
+		return sum;
+	}
+	
+	
+	static double avgArray(double array[], int numUsed) {
+		double sum = 0;
+		for(int i = 0; i <= numUsed; i++) {
+			sum += array[i];
+		}
+		
+		return sum / numUsed;
+	}
+	
+	
+	static double highestValue(double array[], int numUsed) {
+		double highestValue = array[0];
+		for(int i = 1; i <= numUsed; i++){
+			if(array[i] > highestValue) {
+				highestValue = array[i];
+			}
+		}
+		
+		return highestValue;
+	}
+	
+	
+	static double lowestValue(double array[], int numUsed) {
+		double lowestValue = array[0];
+		for(int i = 1; i <= numUsed; i++){
+			if(array[i] < lowestValue) {
+				lowestValue = array[i];
+			}
+		}
+		
+		return lowestValue;
+	}
+	
+	
+	static void sortArray(double array[], int size, int numUsed) {
+		Arrays.sort(array);
+		//This is to put the zeros at the end of the array
+		for(int i = 9 - numUsed; i <= numUsed; i++) {
+			array[i - numUsed] = array[i];
+			array[i] = 0;
+		}
+	}
+	
+	
+	public static int main(String args[]){
+		double[] salesData = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		int locations = 0;
+		
+		String storeName;
+		Scanner name = new Scanner(System.in);
+		
+		System.out.print("Please input the store name: ");
+		storeName = name.nextLine();
+		name.close();
+		
+		locations = fillArray(salesData);
+		
+		System.out.println("The initial store sales data in the array is:");
+		displayArray(salesData, locations);
+		
+		System.out.println("The data sorted is:");
+		sortArray(salesData, 10, locations);
+		displayArray(salesData, locations);
+		
+		System.out.println("Store Name: " + storeName);
+		System.out.println("The total sales: $" + sumArray(salesData, locations));
+		System.out.println("The average sales: $" + avgArray(salesData, locations));
+		System.out.println("The highest sale: $" + highestValue(salesData, locations));
+		System.out.println("The lowest sale: $" + lowestValue(salesData, locations));
+		
+		return 0;
+	}
+}
